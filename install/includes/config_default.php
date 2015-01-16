@@ -11,12 +11,12 @@
 
 		###### SYMPHONY ######
 		'symphony' => array(
-			'admin-path' => 'symphony',
+			'admin-path' => 'admin',
 			'pagination_maximum_rows' => '20',
 			'association_maximum_rows' => '5',
 			'lang' => 'en',
 			'pages_table_nest_children' => 'no',
-			'version' => VERSION,
+			'version' => '2.6.0-beta.2',
 			'cookie_prefix' => 'sym-',
 			'session_gc_divisor' => '10',
 			'cell_truncation_length' => '75',
@@ -54,8 +54,8 @@
 
 		###### GENERAL ######
 		'general' => array(
-			'sitename' => 'Symphony CMS',
-			'useragent' => 'Symphony/' . VERSION,
+			'sitename' => 'Remember',
+			'useragent' => 'Symphony/2.6.0-beta.2',
 		),
 		########
 
@@ -79,14 +79,45 @@
 			'time_format' => 'g:i a',
 			'date_format' => 'm/d/Y',
 			'datetime_separator' => ' ',
-			'timezone' => null
+			'timezone' => 'America/Sao_Paulo',
+			'weekoffset' => 0,
 		),
 		########
 
 
-		###### CACHE ######
+		###### CACHE_DRIVER ######
 		'cache_driver' => array(
 			'default' => 'database',
+		),
+		########
+
+
+		###### HASHID_FIELD ######
+		'hashid_field' => array(
+			'hash_salt' => 'Remember',
+			'hash_length' => '7',
+		),
+		########
+
+
+		###### SORTING ######
+		'sorting' => array(
+			'section_entries_sortby' => '3',
+			'section_entries_order' => 'desc',
+		),
+		########
+
+
+		###### NAVIGATIONICONS ######
+		'navigationicons' => array(
+			'navigation' => '{"System":"system","Blueprints":"blueprints","Dashboard":"dashboard"}',
+		),
+		########
+
+
+		###### DUMP_DB ######
+		'dump_db' => array(
+			'last_sync' => '2015-01-16T02:15:37-02:00',
 		),
 		########
 	);

@@ -10,10 +10,10 @@ CREATE TABLE`tbl_fields_association` (
   `limit` int(4) unsigned NOT NULL DEFAULT '20',
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- *** DATA:`tbl_fields_association` ***
-INSERT INTO`tbl_fields_association` (`id`, `field_id`, `allow_multiple_selection`, `hide_when_prepopulated`, `related_field_id`, `limit`) VALUES (19, 8, 'no', 'no', 2, 999);
+INSERT INTO`tbl_fields_association` (`id`, `field_id`, `allow_multiple_selection`, `hide_when_prepopulated`, `related_field_id`, `limit`) VALUES (24, 8, 'no', 'no', 2, 999);
 
 -- *** STRUCTURE:`tbl_fields_author` ***
 DROP TABLE IF EXISTS`tbl_fields_author`;
@@ -48,6 +48,8 @@ CREATE TABLE`tbl_fields_date` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `field_id` int(11) unsigned NOT NULL,
   `pre_populate` varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `calendar` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no',
+  `time` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -65,10 +67,10 @@ CREATE TABLE`tbl_fields_entry_url` (
   `hide` enum('yes','no') DEFAULT 'no',
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 -- *** DATA:`tbl_fields_entry_url` ***
-INSERT INTO`tbl_fields_entry_url` (`id`, `field_id`, `anchor_label`, `expression`, `new_window`, `hide`) VALUES (13, 10, 'View {entry/uid} in the homepage', '/#{entry/uid}', 'no', 'no');
+INSERT INTO`tbl_fields_entry_url` (`id`, `field_id`, `anchor_label`, `expression`, `new_window`, `hide`) VALUES (18, 10, 'View {entry/uid} in the homepage', '/#{entry/uid}', 'no', 'no');
 
 -- *** STRUCTURE:`tbl_fields_hashid_field` ***
 DROP TABLE IF EXISTS`tbl_fields_hashid_field`;
@@ -80,10 +82,10 @@ CREATE TABLE`tbl_fields_hashid_field` (
   `length` int(2) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- *** DATA:`tbl_fields_hashid_field` ***
-INSERT INTO`tbl_fields_hashid_field` (`id`, `field_id`, `size`, `salt`, `length`) VALUES (29, 2, 0, 'Remember', 7);
+INSERT INTO`tbl_fields_hashid_field` (`id`, `field_id`, `size`, `salt`, `length`) VALUES (34, 2, 0, 'Remember', 7);
 
 -- *** STRUCTURE:`tbl_fields_input` ***
 DROP TABLE IF EXISTS`tbl_fields_input`;
@@ -107,10 +109,10 @@ CREATE TABLE`tbl_fields_maplocation` (
   `default_zoom` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- *** DATA:`tbl_fields_maplocation` ***
-INSERT INTO`tbl_fields_maplocation` (`id`, `field_id`, `default_location`, `default_location_coords`, `default_zoom`) VALUES (4, 12, 'London, England', '51.5073509, -0.1277583', 3);
+INSERT INTO`tbl_fields_maplocation` (`id`, `field_id`, `default_location`, `default_location_coords`, `default_zoom`) VALUES (9, 12, 'London, England', '51.5073509, -0.1277583', 3);
 
 -- *** STRUCTURE:`tbl_fields_multiupload` ***
 DROP TABLE IF EXISTS`tbl_fields_multiupload`;
@@ -121,10 +123,10 @@ CREATE TABLE`tbl_fields_multiupload` (
   `validator` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- *** DATA:`tbl_fields_multiupload` ***
-INSERT INTO`tbl_fields_multiupload` (`id`, `field_id`, `destination`, `validator`) VALUES (22, 6, '/workspace/uploads/meta-images', '/\\.(?:bmp|gif|jpe?g|png)$/i');
+INSERT INTO`tbl_fields_multiupload` (`id`, `field_id`, `destination`, `validator`) VALUES (27, 6, '/workspace/uploads/meta-images', '/\\.(?:bmp|gif|jpe?g|png)$/i');
 
 -- *** STRUCTURE:`tbl_fields_oembed` ***
 DROP TABLE IF EXISTS`tbl_fields_oembed`;
@@ -140,10 +142,27 @@ CREATE TABLE`tbl_fields_oembed` (
   `unique_media` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no',
   PRIMARY KEY (`id`),
   UNIQUE KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- *** DATA:`tbl_fields_oembed` ***
-INSERT INTO`tbl_fields_oembed` (`id`, `field_id`, `refresh`, `driver`, `unique`, `thumbs`, `query_params`, `force_ssl`, `unique_media`) VALUES (4, 11, NULL, 'Dailymotion,Embed.ly,Flickr,Iframely,Instagram,Mixcloud,Qik,SlideShare,Soundcloud,Twitter,Viddler,Vimeo,YouTube', 'no', 'no', NULL, 'no', 'no');
+INSERT INTO`tbl_fields_oembed` (`id`, `field_id`, `refresh`, `driver`, `unique`, `thumbs`, `query_params`, `force_ssl`, `unique_media`) VALUES (9, 11, NULL, 'Dailymotion,Embed.ly,Flickr,Iframely,Instagram,Mixcloud,Qik,SlideShare,Soundcloud,Twitter,Viddler,Vimeo,YouTube', 'no', 'yes', NULL, 'no', 'no');
+
+-- *** STRUCTURE:`tbl_fields_reflection` ***
+DROP TABLE IF EXISTS`tbl_fields_reflection`;
+CREATE TABLE`tbl_fields_reflection` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `field_id` int(11) unsigned NOT NULL,
+  `xsltfile` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `expression` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `formatter` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `override` enum('yes','no') COLLATE utf8_unicode_ci DEFAULT 'no',
+  `hide` enum('yes','no') COLLATE utf8_unicode_ci DEFAULT 'no',
+  `fetch_associated_counts` enum('yes','no') COLLATE utf8_unicode_ci DEFAULT 'no',
+  PRIMARY KEY (`id`),
+  KEY `field_id` (`field_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- *** DATA:`tbl_fields_reflection` ***
 
 -- *** STRUCTURE:`tbl_fields_select` ***
 DROP TABLE IF EXISTS`tbl_fields_select`;
@@ -167,10 +186,10 @@ CREATE TABLE`tbl_fields_systemcreateddate` (
   `field_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- *** DATA:`tbl_fields_systemcreateddate` ***
-INSERT INTO`tbl_fields_systemcreateddate` (`id`, `field_id`) VALUES (29, 3);
+INSERT INTO`tbl_fields_systemcreateddate` (`id`, `field_id`) VALUES (34, 3);
 
 -- *** STRUCTURE:`tbl_fields_systemmodifieddate` ***
 DROP TABLE IF EXISTS`tbl_fields_systemmodifieddate`;
@@ -179,10 +198,10 @@ CREATE TABLE`tbl_fields_systemmodifieddate` (
   `field_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- *** DATA:`tbl_fields_systemmodifieddate` ***
-INSERT INTO`tbl_fields_systemmodifieddate` (`id`, `field_id`) VALUES (29, 4);
+INSERT INTO`tbl_fields_systemmodifieddate` (`id`, `field_id`) VALUES (34, 4);
 
 -- *** STRUCTURE:`tbl_fields_taglist` ***
 DROP TABLE IF EXISTS`tbl_fields_taglist`;
@@ -194,10 +213,10 @@ CREATE TABLE`tbl_fields_taglist` (
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`),
   KEY `pre_populate_source` (`pre_populate_source`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- *** DATA:`tbl_fields_taglist` ***
-INSERT INTO`tbl_fields_taglist` (`id`, `field_id`, `validator`, `pre_populate_source`) VALUES (21, 7, NULL, 'existing');
+INSERT INTO`tbl_fields_taglist` (`id`, `field_id`, `validator`, `pre_populate_source`) VALUES (26, 7, NULL, 'existing');
 
 -- *** STRUCTURE:`tbl_fields_textarea` ***
 DROP TABLE IF EXISTS`tbl_fields_textarea`;
@@ -208,11 +227,11 @@ CREATE TABLE`tbl_fields_textarea` (
   `size` int(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- *** DATA:`tbl_fields_textarea` ***
-INSERT INTO`tbl_fields_textarea` (`id`, `field_id`, `formatter`, `size`) VALUES (53, 5, NULL, 5);
-INSERT INTO`tbl_fields_textarea` (`id`, `field_id`, `formatter`, `size`) VALUES (52, 1, NULL, 15);
+INSERT INTO`tbl_fields_textarea` (`id`, `field_id`, `formatter`, `size`) VALUES (63, 5, NULL, 5);
+INSERT INTO`tbl_fields_textarea` (`id`, `field_id`, `formatter`, `size`) VALUES (62, 1, 'markdown_extra_with_smartypants', 25);
 
 -- *** STRUCTURE:`tbl_fields_upload` ***
 DROP TABLE IF EXISTS`tbl_fields_upload`;
@@ -368,8 +387,6 @@ CREATE TABLE`tbl_entries_data_8` (
 -- *** DATA:`tbl_entries_data_8` ***
 INSERT INTO`tbl_entries_data_8` (`id`, `entry_id`, `relation_id`) VALUES (31, 24, 23);
 
--- *** DATA:`tbl_dashboard_panels` ***
-
 -- *** DATA:`tbl_entries` ***
 INSERT INTO`tbl_entries` (`id`, `section_id`, `author_id`, `creation_date`, `creation_date_gmt`, `modification_date`, `modification_date_gmt`) VALUES (24, 1, 1, '2015-01-16 01:14:53', '2015-01-16 03:14:53', '2015-01-16 01:14:55', '2015-01-16 03:14:55');
 INSERT INTO`tbl_entries` (`id`, `section_id`, `author_id`, `creation_date`, `creation_date_gmt`, `modification_date`, `modification_date_gmt`) VALUES (23, 1, 1, '2015-01-16 01:13:29', '2015-01-16 03:13:29', '2015-01-16 01:13:29', '2015-01-16 03:13:29');
@@ -389,15 +406,17 @@ INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (12, 'res
 INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (14, 'entry_url_field', 'enabled', '1.3.0');
 INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (15, 'navigationicons', 'enabled', 1.0);
 INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (16, 'entry_nav', 'enabled', '1.0.0');
-INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (17, 'dashboard', 'disabled', '1.7.0');
+INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (32, 'templatedtextformatters', 'disabled', 1.10);
 INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (18, 'dont_drop', 'enabled', 1.4);
 INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (19, 'profiledevkit', 'enabled', '1.5.1');
 INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (20, 'browsedevkit', 'enabled', '1.0.2');
 INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (21, 'logsdevkit', 'enabled', 1.1);
-INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (22, 'dump_db', 'enabled', '1.11.2');
+INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (22, 'dump_db', 'enabled', 1.12);
 INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (23, 'maplocationfield', 'enabled', '3.3.0');
 INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (24, 'oembed_field', 'enabled', '1.8.6');
-INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (25, 'editor_for_symphony', 'enabled', '0.3.2');
+INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (30, 'markdown_guide', 'enabled', 1.6);
+INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (26, 'reflectionfield', 'enabled', '1.4.1');
+INSERT INTO`tbl_extensions` (`id`, `name`, `status`, `version`) VALUES (28, 'markdown', 'enabled', 1.20);
 
 -- *** DATA:`tbl_extensions_delegates` ***
 INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (1, 2, '/publish/edit/', 'EntryPostEdit', 'compileBackendFields');
@@ -433,12 +452,18 @@ INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`,
 INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (38, 20, '/frontend/', 'ManipulateDevKitNavigation', 'manipulateDevKitNavigation');
 INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (39, 21, '/frontend/', 'FrontendDevKitResolve', 'frontendDevKitResolve');
 INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (40, 21, '/frontend/', 'ManipulateDevKitNavigation', 'manipulateDevKitNavigation');
-INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (41, 22, '/system/preferences/', 'AddCustomPreferenceFieldsets', 'appendPreferences');
-INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (42, 22, '/backend/', 'InitaliseAdminPageHead', 'initaliseAdminPageHead');
-INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (43, 22, '/backend/', 'AppendPageAlert', 'appendAlert');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (60, 22, '/backend/', 'InitaliseAdminPageHead', 'initaliseAdminPageHead');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (59, 22, '/system/preferences/', 'AddCustomPreferenceFieldsets', 'appendPreferences');
 INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (44, 24, '/backend/', 'InitaliseAdminPageHead', 'appendJS');
 INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (45, 24, '*', 'AppendContentType', 'appendContentType');
-INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (46, 25, '/backend/', 'InitaliseAdminPageHead', 'initaliseAdminPageHead');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (69, 30, '/backend/', 'ModifyTextareaFieldPublishWidget', 'addGuideBelowTextArea');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (61, 22, '/backend/', 'AppendPageAlert', 'appendAlert');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (62, 26, '/publish/new/', 'EntryPostCreate', 'compileBackendFields');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (63, 26, '/publish/edit/', 'EntryPostEdit', 'compileBackendFields');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (64, 26, '/xmlimporter/importers/run/', 'XMLImporterEntryPostCreate', 'compileBackendFields');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (65, 26, '/xmlimporter/importers/run/', 'XMLImporterEntryPostEdit', 'compileBackendFields');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (66, 26, '/frontend/', 'EventPostSaveFilter', 'compileFrontendFields');
+INSERT INTO`tbl_extensions_delegates` (`id`, `extension_id`, `page`, `delegate`, `callback`) VALUES (70, 30, '/backend/', 'InitaliseAdminPageHead', 'initaliseAdminPageHead');
 
 -- *** DATA:`tbl_fields` ***
 INSERT INTO`tbl_fields` (`id`, `label`, `element_name`, `type`, `parent_section`, `required`, `sortorder`, `location`, `show_column`) VALUES (1, 'Entry', 'entry', 'textarea', 1, 'yes', 5, 'main', 'yes');
@@ -460,7 +485,7 @@ INSERT INTO`tbl_pages` (`id`, `parent`, `title`, `handle`, `path`, `params`, `da
 INSERT INTO`tbl_pages_types` (`id`, `page_id`, `type`) VALUES (1, 1, 'index');
 
 -- *** DATA:`tbl_sections` ***
-INSERT INTO`tbl_sections` (`id`, `name`, `handle`, `sortorder`, `hidden`, `filter`, `navigation_group`) VALUES (1, 'Entries', 'entries', 1, 'no', 'no', 'Entries');
+INSERT INTO`tbl_sections` (`id`, `name`, `handle`, `sortorder`, `hidden`, `filter`, `navigation_group`) VALUES (1, 'Entries', 'entries', 1, 'no', 'yes', 'Entries');
 
 -- *** DATA:`tbl_sections_association` ***
-INSERT INTO`tbl_sections_association` (`id`, `parent_section_id`, `parent_section_field_id`, `child_section_id`, `child_section_field_id`, `hide_association`, `interface`, `editor`) VALUES (19, 1, 2, 1, 8, 'no', 'aui-selector', 'aui-editor');
+INSERT INTO`tbl_sections_association` (`id`, `parent_section_id`, `parent_section_field_id`, `child_section_id`, `child_section_field_id`, `hide_association`, `interface`, `editor`) VALUES (24, 1, 2, 1, 8, 'no', 'aui-selector', 'aui-editor');
