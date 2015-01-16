@@ -47,7 +47,7 @@
 
 		###### PUBLIC ######
 		'public' => array(
-			'display_event_xml_in_source' => 'no',
+			'display_event_xml_in_source' => 'yes',
 		),
 		########
 
@@ -117,7 +117,7 @@
 
 		###### DUMP_DB ######
 		'dump_db' => array(
-			'last_sync' => '2015-01-16T02:15:37-02:00',
+			'last_sync' => '2015-01-16T05:22:10-02:00',
 		),
 		########
 	);

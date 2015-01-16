@@ -1,7 +1,5 @@
 <?php
 
-require_once TOOLKIT . '/class.datasource.php';
-
 class datasourceentries extends SectionDatasource
 {
     public $dsParamROOTELEMENT = 'entries';
@@ -13,9 +11,6 @@ class datasourceentries extends SectionDatasource
     public $dsParamREDIRECTONEMPTY = 'no';
     public $dsParamREDIRECTONFORBIDDEN = 'no';
     public $dsParamREDIRECTONREQUIRED = 'no';
-    public $dsParamPARAMOUTPUT = array(
-        'uid'
-        );
     public $dsParamSORT = 'system:creation-date';
     public $dsParamHTMLENCODE = 'no';
     public $dsParamASSOCIATEDENTRYCOUNTS = 'no';
@@ -26,10 +21,14 @@ class datasourceentries extends SectionDatasource
         'reply',
         'creation-date',
         'modified-date',
-        'entry',
-        'meta-description',
-        'meta-images',
-        'meta-keywords'
+        'entry-anchor',
+        'entry: formatted',
+        'entry: unformatted',
+        'description',
+        'keywords',
+        'images',
+        'meta-oembed',
+        'location'
     );
     
     public $dsParamINCLUDEDASSOCIATIONS = array(
@@ -41,10 +40,14 @@ class datasourceentries extends SectionDatasource
                 'reply',
                 'creation-date',
                 'modified-date',
-                'entry',
-                'meta-description',
-                'meta-images',
-                'meta-keywords'
+                'entry-anchor',
+                'entry: formatted',
+                'entry: unformatted',
+                'description',
+                'keywords',
+                'images',
+                'meta-oembed',
+                'location'
             )
         )
     );
@@ -63,8 +66,8 @@ class datasourceentries extends SectionDatasource
                 'name' => 'Bernardo Dias da Cruz',
                 'website' => 'http://localhost/remember',
                 'email' => 'bernardodiasdacruz@gmail.com'),
-            'version' => 'Symphony 2.5.2',
-            'release-date' => '2015-01-16T00:43:31+00:00'
+            'version' => 'Symphony 2.6.0-beta.2',
+            'release-date' => '2015-01-16T07:56:19+00:00'
         );
     }
 
