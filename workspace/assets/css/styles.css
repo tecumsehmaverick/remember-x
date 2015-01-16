@@ -184,3 +184,55 @@ entry control system:hover {
     opacity: 1;
     transition-delay: 0s;
 }
+
+
+/* 
+    Markdown Editor
+ */
+
+.editor-toolbar {
+    margin-top: 4px;
+    padding: 4px;
+    font-size: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1);
+    opacity: 1 !important;
+    z-index: 5;
+}
+
+.editor-toolbar:hover > * {
+    opacity: 0.8;
+}
+
+.editor-toolbar > * {
+    opacity: 0.6;
+}
+
+.editor-toolbar:before, .editor-toolbar:after {
+    display: none;
+}
+
+.CodeMirror {
+    width: 100%;
+    padding: 6px 6px 2px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-width: 0 1px 1px 1px;
+    background: #fff;
+    outline: none;
+    height: auto;
+    min-height: 7em;
+}
+
+.invalid .CodeMirror {
+    color: #000;
+}
+
+.editor-statusbar {
+    font-size: 1em;
+}
+
+.editor-preview {
+    box-sizing: border-box;
+    padding: 20px;
+    background: #fbfbfb;
+}

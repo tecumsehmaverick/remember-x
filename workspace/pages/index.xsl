@@ -17,11 +17,9 @@
     <head>
         <title>Remember</title>
         <link rel="icon" href="{$workspace}/assets/img/remember_icon-16.png"/>
-        <link rel="stylesheet" href="{$workspace}/assets/css/styles.css"/>
         <link rel="stylesheet" href="{$root}/extensions/editor_for_symphony/assets/editor/editor.css"/>
-        <script type="text/javascript" src="{$root}/symphony/assets/js/lib/jquery.js"></script>
+        <link rel="stylesheet" href="{$workspace}/assets/css/styles.css"/>
         <script type="text/javascript" src="{$root}/extensions/editor_for_symphony/assets/editor/editor.js"></script>
-        <script type="text/javascript" src="{$root}/extensions/editor_for_symphony/assets/publish.editor.js"></script>
     </head>
     <body>
         <page>
@@ -51,6 +49,10 @@
                 <xsl:apply-templates select="data/entries/reply[@link-handle = 'none']/entry"/>
             </entries>
         </page>
+        <script>
+            var editor = new Editor();
+            editor.render();
+        </script>
     </body>
 </html>
 
