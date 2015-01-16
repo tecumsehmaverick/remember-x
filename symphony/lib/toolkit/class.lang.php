@@ -293,7 +293,7 @@ class Lang
         self::$_dictionary = array();
 
         // Language file available
-        if ($code != 'en' && (self::isLanguageEnabled($code) || $checkStatus == false)) {
+        if ($code !== 'en' && (self::isLanguageEnabled($code) || $checkStatus == false)) {
             // Load core translations
             self::load(vsprintf('%s/lang_%s/lang/lang.%s.php', array(
                 EXTENSIONS, self::$_languages[$code]['handle'], $code
@@ -316,7 +316,7 @@ class Lang
             self::$_transliterations = $transliterations;
 
             // Log error, if possible
-            if ($code != 'en' && class_exists('Symphony') && Symphony::Log() instanceof Log) {
+            if ($code !== 'en' && class_exists('Symphony', false) && Symphony::Log() instanceof Log) {
                 Symphony::Log()->pushToLog(
                     __('The selected language, %s, could not be found. Using default English dictionary instead.', array($code)),
                     E_ERROR,
@@ -342,7 +342,7 @@ class Lang
         $enabled_extensions = array();
 
         // Fetch list of active extensions
-        if(class_exists('Symphony') && (!is_null(Symphony::ExtensionManager()))){
+        if(class_exists('Symphony', false) && (!is_null(Symphony::ExtensionManager()))){
             $enabled_extensions = Symphony::ExtensionManager()->listInstalledHandles();
         }
 
@@ -397,7 +397,7 @@ class Lang
      *  Returns the translated string
      */
     public static function translate($string, array $inserts = null, $namespace = null) {
-        if(is_null($namespace) && class_exists('Symphony')){
+        if(is_null($namespace) && class_exists('Symphony', false)){
             $namespace = Symphony::getPageNamespace();
         }
 
@@ -453,7 +453,7 @@ class Lang
      *  Returns true for localized system, false for English system
      */
     public static function isLocalized() {
-        return (self::get() != 'en');
+        return (self::get() !== 'en');
     }
 
     /**
@@ -497,7 +497,7 @@ class Lang
             // @todo Test if this separator is still required. It's a hidden setting
             // and users are only aware of it if they go digging/pointed in the right direction
             $separator = Symphony::Configuration()->get('datetime_separator', 'region');
-            if($separator != ' ') {
+            if($separator !== ' ') {
                 $string = str_replace($separator, ' ', $string);
             }
         }

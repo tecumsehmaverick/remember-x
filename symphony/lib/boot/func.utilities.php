@@ -201,6 +201,8 @@ function is_session_empty()
 
 /**
  * Responsible for picking the launcher function and starting it.
+ *
+ *  @param string $mode (optional)
  */
 function symphony($mode) 
 {
@@ -212,20 +214,16 @@ function symphony($mode)
  * Responsible for launching a standard symphony instance and
  * sending output to the browser.
  *
- *  @param string $val (optional)
+ *  @param string $mode (optional)
  *  @return integer
  */
 function symphony_launcher($mode)
 {
     if (strtolower($mode) == 'administration') {
-        require_once CORE . "/class.administration.php";
-
         $renderer = Administration::instance();
     }
 
     else {
-        require_once CORE . "/class.frontend.php";
-
         $renderer = Frontend::instance();
     }
 

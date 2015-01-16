@@ -7,8 +7,6 @@
  * of a Symphony backend page.
  */
 
-require_once TOOLKIT . '/class.page.php';
-
 class HTMLPage extends Page
 {
     /**
@@ -187,7 +185,7 @@ class HTMLPage extends Page
     public function removeFromHead($elementName)
     {
         foreach ($this->_head as $position => $element) {
-            if ($element->getName() != $elementName) {
+            if ($element->getName() !== $elementName) {
                 continue;
             }
 

@@ -3,9 +3,6 @@
  * @package toolkit
  */
 
-require_once FACE . '/interface.exportablefield.php';
-require_once FACE . '/interface.importablefield.php';
-
 /**
  * The Tag List field is really a different interface for the Select Box
  * field, offering a tag interface that can have static suggestions,
@@ -101,7 +98,7 @@ class FieldTagList extends Field implements ExportableField, ImportableField
     }
 
     /**
-     * @deprecated Will be removed in Symphony 2.6.0, use `getToggleStates()` instead
+     * @deprecated Will be removed in Symphony 3.0, use `getToggleStates()` instead
      */
     public function findAllTags()
     {
@@ -238,7 +235,7 @@ class FieldTagList extends Field implements ExportableField, ImportableField
             if($field_id === 'none') continue;
 
             if (!is_null($field_id) && is_numeric($field_id)) {
-                SectionManager::createSectionAssociation(null, $id, (int) $field_id, $this->get('show_association') == 'yes' ? true : false, $this->get('association_ui'), $this->get('association_editor'));
+                SectionManager::createSectionAssociation(null, $id, (int) $field_id, $this->get('show_association') === 'yes' ? true : false, $this->get('association_ui'), $this->get('association_editor'));
             }
         }
 
@@ -259,7 +256,7 @@ class FieldTagList extends Field implements ExportableField, ImportableField
 
         $label = Widget::Label($this->get('label'));
 
-        if ($this->get('required') != 'yes') {
+        if ($this->get('required') !== 'yes') {
             $label->appendChild(new XMLElement('i', __('Optional')));
         }
 
@@ -296,7 +293,7 @@ class FieldTagList extends Field implements ExportableField, ImportableField
     {
         $message = null;
 
-        if ($this->get('required') == 'yes' && strlen(trim($data)) == 0) {
+        if ($this->get('required') === 'yes' && strlen(trim($data)) == 0) {
             $message = __('‘%s’ is a required field.', array($this->get('label')));
             return self::__MISSING_FIELDS__;
         }
@@ -348,13 +345,13 @@ class FieldTagList extends Field implements ExportableField, ImportableField
 
     public function appendFormattedElement(XMLElement &$wrapper, $data, $encode = false, $mode = null, $entry_id = null)
     {
-        if (!is_array($data) || empty($data)) {
+        if (!is_array($data) || empty($data) || is_null($data['value'])) {
             return;
         }
 
         $list = new XMLElement($this->get('element_name'));
 
-        if (!is_array($data['handle']) and !is_array($data['value'])) {
+        if (!is_array($data['handle']) && !is_array($data['value'])) {
             $data = array(
                 'handle'    => array($data['handle']),
                 'value'     => array($data['value'])
@@ -498,10 +495,8 @@ class FieldTagList extends Field implements ExportableField, ImportableField
         Filtering:
     -------------------------------------------------------------------------*/
 
-    public function displayDatasourceFilterPanel(XMLElement &$wrapper, $data = null, $errors = null, $fieldnamePrefix = null, $fieldnamePostfix = null)
+    public function displayFilteringOptions(XMLElement &$wrapper)
     {
-        parent::displayDatasourceFilterPanel($wrapper, $data, $errors, $fieldnamePrefix, $fieldnamePostfix);
-
         if ($this->get('pre_populate_source') != null) {
 
             $existing_tags = $this->getToggleStates();

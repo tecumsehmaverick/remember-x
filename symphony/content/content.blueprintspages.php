@@ -9,9 +9,6 @@
  * an index view of all the pages in this Symphony install as well as the
  * forms for the creation/editing of a Page
  */
-require_once TOOLKIT . '/class.administrationpage.php';
-require_once TOOLKIT . '/class.resourcemanager.php';
-require_once TOOLKIT . '/class.xsltprocess.php';
 
 class contentBlueprintsPages extends AdministrationPage
 {
@@ -246,15 +243,13 @@ class contentBlueprintsPages extends AdministrationPage
         // Status message:
         if (isset($this->_context[2])) {
             $flag = $this->_context[2];
-            $link_suffix = $message = '';
+            $parent_link_suffix = $message = '';
             $time = Widget::Time();
 
             if (isset($_REQUEST['parent']) && is_numeric($_REQUEST['parent'])) {
                 $parent_link_suffix = "?parent=" . $_REQUEST['parent'];
             } elseif ($nesting == true && isset($existing) && !is_null($existing['parent'])) {
                 $parent_link_suffix = '?parent=' . $existing['parent'];
-            } else {
-                $parent_link_suffix = '';
             }
 
             switch ($flag) {
@@ -440,7 +435,7 @@ class contentBlueprintsPages extends AdministrationPage
         $label = Widget::Label(__('Events'));
         $label->setAttribute('class', 'column');
 
-        $events = ResourceManager::fetch(RESOURCE_TYPE_EVENT, array(), array(), 'name ASC');
+        $events = ResourceManager::fetch(ResourceManager::RESOURCE_TYPE_EVENT, array(), array(), 'name ASC');
         $options = array();
 
         if (is_array($events) && !empty($events)) {
@@ -463,7 +458,7 @@ class contentBlueprintsPages extends AdministrationPage
         $label = Widget::Label(__('Data Sources'));
         $label->setAttribute('class', 'column');
 
-        $datasources = ResourceManager::fetch(RESOURCE_TYPE_DS, array(), array(), 'name ASC');
+        $datasources = ResourceManager::fetch(ResourceManager::RESOURCE_TYPE_DS, array(), array(), 'name ASC');
         $options = array();
 
         if (is_array($datasources) && !empty($datasources)) {

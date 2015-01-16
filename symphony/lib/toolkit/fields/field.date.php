@@ -4,9 +4,6 @@
  * @package toolkit
  */
 
-require_once FACE . '/interface.exportablefield.php';
-require_once FACE . '/interface.importablefield.php';
-
 /**
  * A simple Date field that stores a full ISO date. Symphony will attempt
  * to localize the date on a per Author basis. The field essentially maps to
@@ -65,6 +62,33 @@ class FieldDate extends Field implements ExportableField, ImportableField
     public function allowDatasourceParamOutput()
     {
         return true;
+    }
+
+    public function fetchFilterableOperators()
+    {
+        return array(
+            array(
+                'title' => 'later than',
+                'filter' => 'later than '
+            ),
+            array(
+                'title' => 'earlier than',
+                'filter' => 'earlier than '
+            ),
+            array(
+                'title' => 'equal to or later than',
+                'filter' => 'equal to or later than '
+            ),
+            array(
+                'title' => 'equal to or earlier than',
+                'filter' => 'equal to or earlier than '
+            ),
+        );
+    }
+
+    public function fetchSuggestionTypes()
+    {
+        return array('date');
     }
 
     /*-------------------------------------------------------------------------
@@ -325,6 +349,24 @@ class FieldDate extends Field implements ExportableField, ImportableField
         }
     }
 
+    /**
+     * Format the $data parameter according to this field's settings.
+     *
+     * @since Symphony 2.6.0
+     * @param array $date
+     *  The date to format
+     * @return string
+     */
+    public function formatDate($date)
+    {
+        // Get format
+        $format = 'date_format';
+        if ($this->get('time') === 'yes') {
+            $format = 'datetime_format';
+        }
+        return DateTimeObj::format($date, DateTimeObj::getSetting($format));
+    }
+
     /*-------------------------------------------------------------------------
         Settings:
     -------------------------------------------------------------------------*/
@@ -348,6 +390,12 @@ class FieldDate extends Field implements ExportableField, ImportableField
         $label->appendChild($input);
         $wrapper->appendChild($label);
 
+        // Display settings
+        $div = new XMLElement('div', null, array('class' => 'two columns'));
+        $this->createCheckboxSetting($div, 'time', __('Display time'));
+        $this->createCheckboxSetting($div, 'calendar', __('Show calendar'));
+        $wrapper->appendChild($div);
+
         // Requirements and table display
         $this->appendStatusFooter($wrapper);
     }
@@ -367,6 +415,8 @@ class FieldDate extends Field implements ExportableField, ImportableField
         $fields = array();
 
         $fields['pre_populate'] = ($this->get('pre_populate') ? $this->get('pre_populate') : '');
+        $fields['time'] = ($this->get('time') ? $this->get('time') : 'no');
+        $fields['calendar'] = ($this->get('calendar') ? $this->get('calendar') : 'no');
 
         return FieldManager::saveSettings($id, $fields);
     }
@@ -381,12 +431,12 @@ class FieldDate extends Field implements ExportableField, ImportableField
         $value = null;
 
         // New entry
-        if ((is_null($data) || empty($data)) && is_null($flagWithError) && !is_null($this->get('pre_populate')) && $this->get('pre_populate') != 'no') {
-            $prepopulate = ($this->get('pre_populate') == 'yes') ? 'now' : $this->get('pre_populate');
+        if ((is_null($data) || empty($data)) && is_null($flagWithError) && !is_null($this->get('pre_populate')) && $this->get('pre_populate') !== 'no') {
+            $prepopulate = ($this->get('pre_populate') === 'yes') ? 'now' : $this->get('pre_populate');
 
             $date = self::parseDate($prepopulate);
             $date = $date['start'];
-            $value = DateTimeObj::format($date, DateTimeObj::getSetting('datetime_format'));
+            $value = $this->formatDate($date);
 
             // Error entry, display original data
         } elseif (!is_null($flagWithError)) {
@@ -394,15 +444,22 @@ class FieldDate extends Field implements ExportableField, ImportableField
 
             // Empty entry
         } elseif (isset($data['value'])) {
-            $value = DateTimeObj::format($data['value'], DateTimeObj::getSetting('datetime_format'));
+            $value = $this->formatDate($data['value']);
         }
 
         $label = Widget::Label($this->get('label'));
 
-        if ($this->get('required') != 'yes') {
+        if ($this->get('required') !== 'yes') {
             $label->appendChild(new XMLElement('i', __('Optional')));
         }
 
+        // Calendar
+        if ($this->get('calendar') === 'yes') {
+            $wrapper->setAttribute('data-interactive', 'data-interactive');
+            $label->appendChild(Widget::Calendar(($this->get('time') === 'yes')));
+        }
+
+        // Input
         $label->appendChild(Widget::Input("fields{$fieldnamePrefix}[{$name}]", $value));
         $label->setAttribute('class', 'date');
 
@@ -418,7 +475,7 @@ class FieldDate extends Field implements ExportableField, ImportableField
         $message = null;
 
         // If this field is required
-        if ($this->get('required') == 'yes' && strlen(trim($data)) == 0) {
+        if ($this->get('required') === 'yes' && strlen(trim($data)) == 0) {
             $message = __('‘%s’ is a required field.', array($this->get('label')));
             return self::__MISSING_FIELDS__;
         } elseif (empty($data)) {
@@ -444,7 +501,7 @@ class FieldDate extends Field implements ExportableField, ImportableField
             if ($this->get('pre_populate') !='') {
                 $date = self::parseDate($this->get('pre_populate'));
                 $date = $date['start'];
-                $timestamp = DateTimeObj::format($date, DateTimeObj::getSetting('datetime_format'));
+                $timestamp = $this->formatDate($date);
             }
 
             // Convert given date to timestamp
@@ -492,7 +549,7 @@ class FieldDate extends Field implements ExportableField, ImportableField
         $value = '';
 
         if (isset($data['value'])) {
-            $value = DateTimeObj::format($data['value'], DateTimeObj::getSetting('datetime_format'), true);
+            $value = $this->formatDate($data['value']);
         }
 
         return $value;

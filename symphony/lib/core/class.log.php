@@ -8,8 +8,6 @@
  * be read at a later date. There is one Log file in Symphony, stored in the main
  * `LOGS` directory.
  */
-require_once CORE . '/class.datetimeobj.php';
-require_once TOOLKIT . '/class.general.php';
 
 class Log
 {
@@ -232,7 +230,7 @@ class Log
             return false;
         }
 
-        $permissions = (class_exists('Symphony')) ? Symphony::Configuration()->get('write_mode', 'file') : '0664';
+        $permissions = class_exists('Symphony', false) ? Symphony::Configuration()->get('write_mode', 'file') : '0664';
 
         return General::writeFile($this->_log_path, $message . ($addbreak ? PHP_EOL : ''), $permissions, 'a+');
     }
@@ -305,7 +303,11 @@ class Log
                 if ($this->_archive) {
                     $this->close();
                     $file = $this->_log_path . DateTimeObj::get('Ymdh').'.gz';
-                    $handle = gzopen($file, 'w9');
+                    if (function_exists('gzopen64')) {
+                        $handle = gzopen64($file, 'w9');
+                    } else {
+                        $handle = gzopen($file, 'w9');
+                    }
                     gzwrite($handle, file_get_contents($this->_log_path));
                     gzclose($handle);
                     chmod($file, intval($mode, 8));
